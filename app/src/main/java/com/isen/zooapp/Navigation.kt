@@ -22,5 +22,9 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         composable(Routes.SIGN_UP) {
             SignUpScreen(navController)
         }
+
+        composable(Routes.HOME) {
+            HomeScreen(navController)
+        }
     }
 }

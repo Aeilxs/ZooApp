@@ -86,7 +86,7 @@ fun SignInScreen(navController: NavController) {
                 } else {
                     AuthManager.signIn(email, password) { isSuccess, error ->
                         if (isSuccess) {
-                            navController.navigate("signup")
+                            navController.navigate("home")
                         } else {
                             errorMessage = error ?: context.getString(R.string.error_unknown)
                         }
