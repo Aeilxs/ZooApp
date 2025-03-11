@@ -7,4 +7,5 @@
     <string name="confirm_pwd_field">Confirmer le mot de passe</string>
     <string name="error_empty_fields">Tous les champs doivent être remplis !</string>
     <string name="error_password_mismatch">Les mots de passe ne correspondent pas !</string>
+    <string name="error_unknown">Erreur inconnue</string>
 </resources>

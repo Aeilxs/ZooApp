@@ -103,8 +103,14 @@ fun SignUpScreen(navController: NavController) {
                     // On vide le message d'erreur
                     errorMessage = ""
                     // Inscription
-                    // Appeler Firebase Auth
-                    // navController.navigate("homescreen")
+                    AuthManager.signUp(email, password) { success, error ->
+                        if (success) {
+                            navController.navigate("signin")
+                        } else {
+                            // (Si Firebase renvoie une erreur nulle)
+                            errorMessage = error ?: context.getString(R.string.error_unknown)
+                        }
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth(),
