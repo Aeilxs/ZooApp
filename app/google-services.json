@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "92053683900",
+    "project_id": "zooapp-8f490",
+    "storage_bucket": "zooapp-8f490.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92053683900:android:b2d48cbdeb8c34eb751ab9",
+        "android_client_info": {
+          "package_name": "com.isen.zooapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6oFoRQie4CJePQhOAl1d8rKIr1mtnpwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
