@@ -45,6 +45,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
+    implementation("androidx.navigation:navigation-compose:2.8.8")
 
     // DEFAULT
     implementation(libs.androidx.core.ktx)
