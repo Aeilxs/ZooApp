@@ -1,0 +1,1 @@
+désolé j'ai du recommencé le projet ça a remis le .idea fabio mais ptit probleme de namespace ça reprenait le isensmartcompainon.zooapp et ça cassait tout pour firebase, voilà firebase de connecter jvous ajoute direct au projet gcp
