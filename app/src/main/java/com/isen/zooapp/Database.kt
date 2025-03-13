@@ -12,12 +12,12 @@ object Database {
     private val database: DatabaseReference =
         FirebaseDatabase.getInstance("https://zooapp-8f490-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
-    fun fetchBiomes() {
+    fun fetchBiomes(onBiomesFetched: (List<Biome>) -> Unit) {
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (biomeSnapshot in snapshot.children) {
-                    val biome = biomeSnapshot.getValue(Biome::class.java)
-                    Log.d("Database", "Biome récupéré : $biome")
+                    val biomesList = snapshot.children.mapNotNull { it.getValue(Biome::class.java) }
+                    onBiomesFetched(biomesList)
                 }
             }
 
