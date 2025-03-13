@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    Database.fetchBiomes()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
