@@ -8,4 +8,7 @@
     <string name="error_empty_fields">Tous les champs doivent être remplis !</string>
     <string name="error_password_mismatch">Les mots de passe ne correspondent pas !</string>
     <string name="error_unknown">Erreur inconnue</string>
+    <string name="biomes_screen_title">Biomes du zoo</string>
+    <string name="enclosure">Enclos n° </string>
+    <string name="animal_screen_title">Animaux de l\'enclos n° </string>
 </resources>

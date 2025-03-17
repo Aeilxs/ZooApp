@@ -26,5 +26,16 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         composable(Routes.HOME) {
             HomeScreen(navController)
         }
+
+        composable(Routes.ENCLOSURES) { backStackEntry ->
+            val biomeId = backStackEntry.arguments?.getString("biomeId") ?: ""
+            EnclosureScreen(navController, biomeId)
+        }
+
+        composable(Routes.ANIMALS) { backStackEntry ->
+            val enclosureId = backStackEntry.arguments?.getString("enclosureId") ?: ""
+            AnimalScreen(navController, enclosureId)
+        }
+
     }
 }
