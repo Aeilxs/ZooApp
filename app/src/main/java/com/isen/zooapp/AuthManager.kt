@@ -24,4 +24,8 @@ object AuthManager {
             }
         }
     }
+
+    fun getCurrentUserId(): String? {
+        return auth.currentUser?.uid
+    }
 }

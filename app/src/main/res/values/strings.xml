@@ -11,4 +11,13 @@
     <string name="biomes_screen_title">Biomes du zoo</string>
     <string name="enclosure">Enclos n° </string>
     <string name="animal_screen_title">Animaux de l\'enclos n° </string>
+    <string name="reviews_title">Avis sur cet enclos</string>
+    <string name="average_rating">Note moyenne</string>
+    <string name="posted_by">Posté par</string>
+    <string name="rating">Note</string>
+    <string name="your_review">Votre avis</string>
+    <string name="stars">étoiles</string>
+    <string name="sending">Envoi...</string>
+    <string name="send">Envoyer</string>
+    <string name="connect_to_leave_a_review">Connectez-vous pour laisser un avis.</string>
 </resources>

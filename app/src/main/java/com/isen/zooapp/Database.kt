@@ -13,12 +13,10 @@ object Database {
         FirebaseDatabase.getInstance("https://zooapp-8f490-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
     fun fetchBiomes(onBiomesFetched: (List<Biome>) -> Unit) {
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
+        database.child("biomes").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (biomeSnapshot in snapshot.children) {
-                    val biomesList = snapshot.children.mapNotNull { it.getValue(Biome::class.java) }
-                    onBiomesFetched(biomesList)
-                }
+                val biomesList = snapshot.children.mapNotNull { it.getValue(Biome::class.java) }
+                onBiomesFetched(biomesList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -27,4 +25,34 @@ object Database {
 
         })
     }
+
+    fun fetchReviews(enclosureId: String, onResult: (List<Review>) -> Unit) {
+        database.child("reviews").child(enclosureId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val reviewsList =
+                        snapshot.children.mapNotNull { it.getValue(Review::class.java) }
+                    onResult(reviewsList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(
+                        "Database",
+                        "Erreur lors de la récupération des reviews: ${error.message}"
+                    )
+                    onResult(emptyList())
+                }
+            })
+    }
+
+
+    fun submitReview(enclosureId: String, review: Review, onComplete: (Boolean) -> Unit) {
+        val userId = review.userId
+        database.child("reviews").child(enclosureId).child(userId)
+            .setValue(review)
+            .addOnCompleteListener { task ->
+                onComplete(task.isSuccessful)
+            }
+    }
+
 }
