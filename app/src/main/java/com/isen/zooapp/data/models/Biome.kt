@@ -1,4 +1,4 @@
-package com.isen.zooapp
+package com.isen.zooapp.data.models
 
 data class Biome(
     val id: String = "",

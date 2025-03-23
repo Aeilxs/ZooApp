@@ -1,10 +1,16 @@
-package com.isen.zooapp
+package com.isen.zooapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.isen.zooapp.ui.screens.AnimalScreen
+import com.isen.zooapp.ui.screens.EnclosureScreen
+import com.isen.zooapp.ui.screens.HomeScreen
+import com.isen.zooapp.ui.screens.ProfileScreen
+import com.isen.zooapp.ui.screens.SignInScreen
+import com.isen.zooapp.ui.screens.SignUpScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
@@ -35,6 +41,10 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         composable(Routes.ANIMALS) { backStackEntry ->
             val enclosureId = backStackEntry.arguments?.getString("enclosureId") ?: ""
             AnimalScreen(navController, enclosureId)
+        }
+
+        composable(Routes.PROFILE) {
+            ProfileScreen(navController)
         }
 
     }

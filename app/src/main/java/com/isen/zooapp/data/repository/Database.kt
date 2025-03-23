@@ -1,4 +1,4 @@
-package com.isen.zooapp
+package com.isen.zooapp.data.repository
 
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
@@ -6,6 +6,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.isen.zooapp.data.models.Review
+import com.isen.zooapp.data.models.Biome
+import com.isen.zooapp.data.models.User
 
 object Database {
 
@@ -45,7 +48,6 @@ object Database {
             })
     }
 
-
     fun submitReview(enclosureId: String, review: Review, onComplete: (Boolean) -> Unit) {
         val userId = review.userId
         database.child("reviews").child(enclosureId).child(userId)
@@ -54,5 +56,37 @@ object Database {
                 onComplete(task.isSuccessful)
             }
     }
+
+    fun addUser(userId: String, user: User, onComplete: (Boolean) -> Unit) {
+        database.child("users").child(userId).setValue(user)
+            .addOnCompleteListener { task -> onComplete(task.isSuccessful) }
+    }
+
+    fun fetchUser(userId: String, onResult: (User?) -> Unit) {
+        database.child("users").child(userId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(User::class.java)
+                    onResult(user)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(
+                        "Database",
+                        "Erreur lors de la récupération de l'utilisateur: ${error.message}"
+                    )
+                    onResult(null)
+                }
+
+            })
+    }
+
+    fun updateUserName(userId: String, newName: String, onComplete: (Boolean) -> Unit) {
+        database.child("users").child(userId).child("name").setValue(newName)
+            .addOnCompleteListener { task ->
+                onComplete(task.isSuccessful)
+            }
+    }
+
 
 }

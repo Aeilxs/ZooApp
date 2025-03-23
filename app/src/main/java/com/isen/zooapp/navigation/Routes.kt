@@ -1,4 +1,4 @@
-package com.isen.zooapp
+package com.isen.zooapp.navigation
 
 object Routes {
     const val SIGN_IN = "signin"
@@ -6,4 +6,5 @@ object Routes {
     const val HOME = "home"
     const val ENCLOSURES = "enclosures/{biomeId}"
     const val ANIMALS = "animals/{enclosureId}"
+    const val PROFILE = "profile"
 }

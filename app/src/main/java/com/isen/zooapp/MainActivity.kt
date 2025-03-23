@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.firebase.FirebaseApp
+import com.isen.zooapp.navigation.AppNavigation
 import com.isen.zooapp.ui.theme.ZooAppTheme
 
 class MainActivity : ComponentActivity() {

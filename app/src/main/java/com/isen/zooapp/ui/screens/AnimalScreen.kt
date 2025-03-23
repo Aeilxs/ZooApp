@@ -1,4 +1,4 @@
-package com.isen.zooapp
+package com.isen.zooapp.ui.screens
 
 import androidx.compose.runtime.Composable
 import android.util.Log
@@ -18,6 +18,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.isen.zooapp.R
+import com.isen.zooapp.data.models.Review
+import com.isen.zooapp.data.models.Animal
+import com.isen.zooapp.data.repository.AuthManager
+import com.isen.zooapp.data.repository.Database
 
 @Composable
 fun AnimalScreen(navController: NavController, enclosureId: String) {

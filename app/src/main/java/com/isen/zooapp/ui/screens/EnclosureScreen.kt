@@ -1,4 +1,4 @@
-package com.isen.zooapp
+package com.isen.zooapp.ui.screens
 
 import android.util.Log
 import androidx.compose.foundation.clickable
@@ -10,51 +10,52 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.isen.zooapp.R
+import com.isen.zooapp.data.models.Enclosure
+import com.isen.zooapp.data.repository.Database
 
 @Composable
-fun HomeScreen(navController: NavController) {
-    var biomes by remember { mutableStateOf<List<Biome>>(emptyList()) }
+fun EnclosureScreen(navController: NavController, biomeId: String) {
+    var enclosures by remember { mutableStateOf<List<Enclosure>>(emptyList()) }
+    var biomeName by remember { mutableStateOf("") }
 
-    LaunchedEffect(Unit) {
-        Database.fetchBiomes { fetchedBiomes ->
-            biomes = fetchedBiomes
+    LaunchedEffect(biomeId) {
+        Database.fetchBiomes { biomes ->
+            val biome = biomes.find { it.id == biomeId }
+            enclosures = biome?.enclosures ?: emptyList()
+            biomeName = biome?.name ?: ""
         }
     }
 
-
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 32.dp),
+        modifier = Modifier.fillMaxSize().padding(top = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.biomes_screen_title),
+            text = biomeName,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(16.dp)
         )
 
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(biomes) { biome ->
-                BiomeCard(biome) {
-                    Log.d("HomeScreen", "Biome sélectionné : ${biome.name}")
-                    navController.navigate("enclosures/${biome.id}")
+            items(enclosures) { enclosure ->
+                EnclosureCard(enclosure) {
+                    Log.d("EnclosureScreen", "Enclos sélectionné : ${enclosure.id}")
+                    navController.navigate("animals/${enclosure.id}")
                 }
             }
         }
@@ -62,20 +63,14 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun BiomeCard(biome: Biome, onClick: () -> Unit) {
+fun EnclosureCard(enclosure: Enclosure, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(
-                android.graphics.Color.parseColor(
-                    biome.color
-                )
-            ).copy(alpha = 1f)
-        )
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF80CBC4))
     ) {
         Box(
             modifier = Modifier
@@ -83,10 +78,10 @@ fun BiomeCard(biome: Biome, onClick: () -> Unit) {
                 .padding(16.dp)
         ) {
             Text(
-                text = biome.name,
+                text = stringResource(R.string.enclosure) + enclosure.id,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.Black
             )
         }
     }

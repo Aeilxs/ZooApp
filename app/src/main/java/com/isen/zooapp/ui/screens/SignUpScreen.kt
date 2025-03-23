@@ -1,4 +1,4 @@
-package com.isen.zooapp
+package com.isen.zooapp.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +26,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.isen.zooapp.R
+import com.isen.zooapp.data.repository.AuthManager
 
 @Composable
 fun SignUpScreen(navController: NavController) {
