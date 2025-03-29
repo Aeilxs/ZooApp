@@ -8,15 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,7 +25,6 @@ import androidx.navigation.NavController
 import com.isen.zooapp.R
 import com.isen.zooapp.data.models.Biome
 import com.isen.zooapp.data.repository.Database
-import com.isen.zooapp.navigation.Routes
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -49,17 +43,6 @@ fun HomeScreen(navController: NavController) {
             .padding(top = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        IconButton(
-            onClick = { navController.navigate(Routes.PROFILE) },
-            modifier = Modifier.align(Alignment.End).padding(end = 16.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = "Profile",
-                tint = Color.Blue,
-                modifier = Modifier.size(32.dp)
-            )
-        }
 
         Text(
             text = stringResource(R.string.biomes_screen_title),

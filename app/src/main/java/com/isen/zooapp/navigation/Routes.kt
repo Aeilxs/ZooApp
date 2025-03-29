@@ -7,4 +7,5 @@ object Routes {
     const val ENCLOSURES = "enclosures/{biomeId}"
     const val ANIMALS = "animals/{enclosureId}"
     const val PROFILE = "profile"
+    const val SERVICES = "services"
 }

@@ -20,6 +20,7 @@
     <string name="sending">Envoi...</string>
     <string name="send">Envoyer</string>
     <string name="connect_to_leave_a_review">Connectez-vous pour laisser un avis.</string>
+    <string name="profile_screen">Profil</string>
     <string name="profile_screen_title">Mon profil</string>
     <string name="unknown_email">Email inconnu</string>
     <string name="name_field">Nom</string>
@@ -28,4 +29,7 @@
     <string name="signout">Se déconnecter</string>
     <string name="name_updated">Nom mis à jour</string>
     <string name="error_name_update">Erreur lors de la mise à jour du nom</string>
+    <string name="home_screen">Accueil</string>
+    <string name="services_screen">Services</string>
+    <string name="services_screen_title">Services du parc</string>
 </resources>
