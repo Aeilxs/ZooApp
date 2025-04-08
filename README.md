@@ -42,5 +42,4 @@ Pour tester l'application :
 - Liste des services présents dans le parc (ex : toilettes, café, boutique…)
 
 #### Profil
-- Affichage du nom d’utilisateur
-- Admin : modification du nom
+- Modification du nom d'utilisateur
