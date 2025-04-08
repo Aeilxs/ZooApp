@@ -36,4 +36,8 @@
     <string name="closed">Fermé</string>
     <string name="open_enclosure">Ouvrir</string>
     <string name="close_enclosure">Fermer</string>
+    <string name="feeding_hour">Heure de nourrissage</string>
+    <string name="not_specified">Non renseigné</string>
+    <string name="edit_feeding_hour">Modifier l\'heure</string>
+    <string name="hour_updated">Heure mise à jour avec succès</string>
 </resources>

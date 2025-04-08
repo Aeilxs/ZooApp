@@ -118,6 +118,30 @@ object Database {
         })
     }
 
+    fun updateFeedingSchedule(biomeId: String, enclosureId: String, newSchedule: String, onComplete: (Boolean) -> Unit) {
+        val enclosureRef = database.child("biomes").child(biomeId).child("enclosures")
 
+        enclosureRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val enclosureSnapshot = snapshot.children.find {
+                    it.child("id").getValue(String::class.java) == enclosureId
+                }
+
+                val key = enclosureSnapshot?.key
+                if (key != null) {
+                    enclosureRef.child(key).child("meal").setValue(newSchedule)
+                        .addOnCompleteListener { task ->
+                            onComplete(task.isSuccessful)
+                        }
+                } else {
+                    onComplete(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onComplete(false)
+            }
+        })
+    }
 
 }
