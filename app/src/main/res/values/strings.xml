@@ -41,4 +41,5 @@
     <string name="not_specified">Non renseigné</string>
     <string name="edit_feeding_hour">Modifier l\'heure</string>
     <string name="hour_updated">Heure mise à jour avec succès</string>
+    <string name="map">Carte du parc</string>
 </resources>

@@ -1,11 +1,11 @@
 package com.isen.zooapp.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +18,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.isen.zooapp.R
 import com.isen.zooapp.data.models.ParkService
@@ -48,6 +50,7 @@ fun ServicesScreen(navController: NavController) {
         ParkService("Point de vue", R.drawable.ic_viewpoint)
     )
 
+    var showDialog by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -63,7 +66,6 @@ fun ServicesScreen(navController: NavController) {
         )
 
         LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxHeight(0.6f)
         ) {
             items(services) { service ->
                 Card(
@@ -88,24 +90,37 @@ fun ServicesScreen(navController: NavController) {
 
                 }
             }
+
+            item {
+                Text(
+                    text = stringResource(R.string.map) + ": ",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.map),
+                    contentDescription = stringResource(R.string.map),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { showDialog = true }
+                )
+            }
+
+        }
+        if (showDialog) {
+            Dialog(onDismissRequest = { showDialog = false }) {
+                Image(
+                    painter = painterResource(id = R.drawable.map),
+                    contentDescription = stringResource(R.string.map),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+            }
         }
 
-        Text(
-            text = stringResource(R.string.services_screen_navigation),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            textAlign = TextAlign.Center
-        )
-
-        Image(
-            painter = painterResource(id = R.drawable.plan),
-            contentDescription = "Plan du zoo",
-            modifier = Modifier
-                .fillMaxWidth()
-        )
     }
 
 }
