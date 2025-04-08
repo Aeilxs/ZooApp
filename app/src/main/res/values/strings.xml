@@ -32,6 +32,7 @@
     <string name="home_screen">Accueil</string>
     <string name="services_screen">Services</string>
     <string name="services_screen_title">Services du parc</string>
+    <string name="services_screen_navigation">Navigation</string>
     <string name="open">Ouvert</string>
     <string name="closed">Fermé</string>
     <string name="open_enclosure">Ouvrir</string>

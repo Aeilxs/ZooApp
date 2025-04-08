@@ -1,9 +1,11 @@
 package com.isen.zooapp.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -60,7 +62,9 @@ fun ServicesScreen(navController: NavController) {
             textAlign = TextAlign.Center
         )
 
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxHeight(0.6f)
+        ) {
             items(services) { service ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -85,6 +89,23 @@ fun ServicesScreen(navController: NavController) {
                 }
             }
         }
+
+        Text(
+            text = stringResource(R.string.services_screen_navigation),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            textAlign = TextAlign.Center
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.plan),
+            contentDescription = "Plan du zoo",
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
 
 }
