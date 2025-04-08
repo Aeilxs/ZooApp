@@ -89,4 +89,35 @@ object Database {
     }
 
 
+    fun updateEnclosureMaintenance(biomeId: String, enclosureId: String, newValue: Boolean, onComplete: (Boolean) -> Unit) {
+        val enclosureRef = database.child("biomes").child(biomeId).child("enclosures")
+
+        enclosureRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val enclosureSnapshot = snapshot.children.find {
+                    it.child("id").getValue(String::class.java) == enclosureId
+                }
+
+                val key = enclosureSnapshot?.key
+                Log.d("DEBUG", "Key Firebase trouvé = $key")
+
+                if (key != null) {
+                    enclosureRef.child(key).child("maintenance").setValue(newValue)
+                        .addOnCompleteListener { task ->
+                            onComplete(task.isSuccessful)
+                        }
+                } else {
+                    onComplete(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Database", "Firebase update cancelled: ${error.message}")
+                onComplete(false)
+            }
+        })
+    }
+
+
+
 }

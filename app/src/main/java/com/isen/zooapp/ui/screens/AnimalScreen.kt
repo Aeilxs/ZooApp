@@ -39,7 +39,9 @@ fun AnimalScreen(navController: NavController, enclosureId: String) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(top = 32.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -50,7 +52,9 @@ fun AnimalScreen(navController: NavController, enclosureId: String) {
         )
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(animals) { animal ->
@@ -59,7 +63,11 @@ fun AnimalScreen(navController: NavController, enclosureId: String) {
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-        HorizontalDivider(thickness = 2.dp, color = Color.LightGray, modifier = Modifier.padding(horizontal = 16.dp))
+        HorizontalDivider(
+            thickness = 2.dp,
+            color = Color.LightGray,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
         Spacer(modifier = Modifier.height(16.dp))
 
 
@@ -92,9 +100,14 @@ fun AnimalCard(animal: Animal) {
     }
 }
 
+data class ReviewWithUsername(
+    val username: String,
+    val review: Review
+)
+
 @Composable
 fun ReviewsSection(enclosureId: String) {
-    var reviews by remember { mutableStateOf<List<Review>>(emptyList()) }
+    var reviews by remember { mutableStateOf<List<ReviewWithUsername>>(emptyList()) }
     var rating by remember { mutableStateOf(3) }
     var comment by remember { mutableStateOf("") }
     var isSubmitting by remember { mutableStateOf(false) }
@@ -104,32 +117,57 @@ fun ReviewsSection(enclosureId: String) {
     // Charger les reviews depuis Firebase
     LaunchedEffect(enclosureId) {
         Database.fetchReviews(enclosureId) { fetchedReviews ->
-            reviews = fetchedReviews
+            val result = mutableListOf<ReviewWithUsername>()
+            fetchedReviews.forEach { review ->
+                Database.fetchUser(review.userId) { user ->
+                    val name = user?.name ?: "Anonyme"
+                    result.add(ReviewWithUsername(name, review))
+
+                    if (result.size == fetchedReviews.size) {
+                        reviews = result
+                    }
+                }
+            }
         }
     }
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(R.string.reviews_title), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = stringResource(R.string.reviews_title),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
 
         // Moyenne des notes
-        val averageRating = if (reviews.isNotEmpty()) reviews.map { it.rating }.average() else 0.0
-        Text(text = stringResource(R.string.average_rating) + ": ${"%.1f".format(averageRating)} ⭐", fontSize = 16.sp)
+        val averageRating = if (reviews.isNotEmpty()) reviews.map { it.review.rating }.average() else 0.0
+        Text(
+            text = stringResource(R.string.average_rating) + ": ${"%.1f".format(averageRating)} ⭐",
+            fontSize = 16.sp
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         // Liste des reviews
         LazyColumn(modifier = Modifier.height(200.dp)) {
-            items(reviews) { review ->
+            items(reviews) { (username, review) ->
                 Card(
-                    modifier = Modifier.fillMaxWidth().padding(4.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.LightGray)
                 ) {
                     Column(modifier = Modifier.padding(8.dp)) {
                         Text(text = "⭐ ${review.rating} - ${review.comment}")
-                        Text(text = stringResource(R.string.posted_by) + ": ${review.userId}", fontSize = 12.sp, color = Color.DarkGray)
+                        Text(
+                            text = stringResource(R.string.posted_by) + ": $username",
+                            fontSize = 12.sp,
+                            color = Color.DarkGray
+                        )
                     }
                 }
             }
@@ -140,7 +178,10 @@ fun ReviewsSection(enclosureId: String) {
         // Formulaire d'ajout de review
         if (userId != null) {
 
-            Text(text = stringResource(R.string.rating) + ": $rating "+ stringResource(R.string.stars), fontSize = 16.sp)
+            Text(
+                text = stringResource(R.string.rating) + ": $rating " + stringResource(R.string.stars),
+                fontSize = 16.sp
+            )
             StarRating(rating = rating, onRatingChanged = { rating = it })
 
             OutlinedTextField(
@@ -158,7 +199,10 @@ fun ReviewsSection(enclosureId: String) {
                     val review = Review(userId, rating, comment, System.currentTimeMillis())
                     Database.submitReview(enclosureId, review) { success ->
                         if (success) {
-                            reviews = reviews + review
+                            Database.fetchUser(userId) { user ->
+                                val name = user?.name ?: "Utilisateur"
+                                reviews = reviews + ReviewWithUsername(name, review)
+                            }
                             comment = ""
                         }
                         isSubmitting = false
