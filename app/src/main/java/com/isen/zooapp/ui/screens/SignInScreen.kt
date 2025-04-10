@@ -1,6 +1,7 @@
 package com.isen.zooapp.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,6 +46,24 @@ fun SignInScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.welcome_title),
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1565C0),
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                modifier = Modifier.padding(bottom = 40.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         Text(
             text = stringResource(id = R.string.signin),
             fontSize = 24.sp,

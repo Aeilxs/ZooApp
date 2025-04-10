@@ -1,5 +1,14 @@
 ## Zoo App — Application mobile Android du parc animalier de la Barben
 
+### Lancer l'application
+
+L'APK de production est disponible dans le dossier :  
+`app/release/app-release.apk`
+
+Vous pouvez l'installer directement sur un appareil Android.
+
+---
+
 ### Test de l'application
 
 Pour tester l'application :
